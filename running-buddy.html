@@ -84,6 +84,17 @@ h1{font-family:var(--serif);font-variation-settings:"SOFT" 0,"WONK" 1;font-weigh
     <a href="/">&larr; annacachadina.me</a>
   </header>
 
+  <div class="section-head" style="margin-top:0;">Find your next run</div>
+  <div class="search-row">
+    <input id="location-input" type="text" placeholder="A place name, or paste a Google Maps link…" autocomplete="off">
+    <button id="search-btn">Search</button>
+  </div>
+  <p class="search-hint">Looks up popular Strava running segments near that spot, closest to 5k / 10k / 15k.</p>
+
+  <div id="search-state"></div>
+  <div id="map"></div>
+  <div class="results" id="search-results"></div>
+
   <div id="stats-state" class="state-msg">Loading Strava stats&hellip;</div>
 
   <div id="stats-content" style="display:none;">
@@ -102,17 +113,6 @@ h1{font-family:var(--serif);font-variation-settings:"SOFT" 0,"WONK" 1;font-weigh
     <div class="section-head">Favourite places</div>
     <ul class="places" id="places-list"></ul>
   </div>
-
-  <div class="section-head">Find your next run</div>
-  <div class="search-row">
-    <input id="location-input" type="text" placeholder="A place name, or paste a Google Maps link…" autocomplete="off">
-    <button id="search-btn">Search</button>
-  </div>
-  <p class="search-hint">Looks up popular Strava running segments near that spot, closest to 5k / 10k / 15k.</p>
-
-  <div id="search-state"></div>
-  <div id="map"></div>
-  <div class="results" id="search-results"></div>
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
