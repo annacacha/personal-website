@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running Buddy — Anna Cachadiña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+:root{
+  --ink:#14151A;
+  --muted:#6B6E7B;
+  --rule:#E3E3E9;
+  --indigo:#473BCE;
+  --indigo-light:#6C5FDD;
+  --paper:#FFFFFF;
+  --wash:#F6F6F9;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--wash);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+main{max-width:900px;margin:0 auto;padding:36px 24px 80px;}
+
+.masthead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding-bottom:18px;border-bottom:2px solid var(--ink);margin-bottom:32px;}
+.masthead a{font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;}
+.masthead a:hover{color:var(--ink);}
+h1{font-family:var(--serif);font-variation-settings:"SOFT" 0,"WONK" 1;font-weight:600;font-size:32px;letter-spacing:-0.02em;margin:0;}
+
+.section-head{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:0.13em;text-transform:uppercase;color:var(--indigo);padding-bottom:7px;margin:36px 0 16px;border-bottom:1px solid var(--rule);}
+.section-head:first-of-type{margin-top:0;}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+.card{background:var(--paper);border-radius:4px;padding:18px 20px;box-shadow:0 1px 2px rgba(20,21,26,.05);}
+.card .label{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.card .value{font-family:var(--serif);font-size:26px;font-weight:600;letter-spacing:-0.01em;}
+.card .sub{font-size:12.5px;color:var(--muted);margin-top:4px;}
+
+.places{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.places li{background:var(--paper);border-radius:4px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px;}
+.places .count{font-family:var(--mono);font-size:12px;color:var(--muted);}
+
+.countries-line{font-size:13px;color:var(--muted);margin-top:8px;}
+
+.search-row{display:flex;gap:10px;margin-bottom:20px;}
+.search-row input{
+  flex:1;font-family:var(--sans);font-size:15px;padding:11px 14px;border:1px solid var(--rule);border-radius:2px;background:var(--paper);
+}
+.search-row input:focus{outline:2px solid var(--indigo);outline-offset:0;border-color:var(--indigo);}
+.search-row button{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;padding:0 20px;border:1px solid var(--ink);border-radius:2px;background:var(--ink);color:#fff;cursor:pointer;}
+.search-row button:hover{background:var(--indigo);border-color:var(--indigo);}
+.search-hint{font-size:12px;color:var(--muted);margin:-12px 0 20px;}
+
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.result-col h3{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--indigo);margin:0 0 10px;}
+.segment{background:var(--paper);border-radius:4px;padding:14px 16px;margin-bottom:10px;}
+.segment .name{font-weight:600;font-size:14px;margin-bottom:4px;}
+.segment .name a{color:var(--ink);text-decoration:none;}
+.segment .name a:hover{color:var(--indigo);}
+.segment .meta{font-family:var(--mono);font-size:11px;color:var(--muted);}
+.approx-note{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:8px;}
+
+#map{height:340px;border-radius:4px;margin-top:20px;display:none;}
+
+.state-msg{font-size:14px;color:var(--muted);padding:20px 0;}
+.error-msg{font-size:14px;color:#B4232A;padding:20px 0;}
+</style>
+</head>
+<body>
+<main>
+  <header class="masthead">
+    <h1>Running Buddy</h1>
+    <a href="/">&larr; annacachadina.me</a>
+  </header>
+
+  <div id="stats-state" class="state-msg">Loading Strava stats&hellip;</div>
+
+  <div id="stats-content" style="display:none;">
+    <div class="section-head">This year</div>
+    <div class="cards" id="year-cards"></div>
+
+    <div class="section-head">Countries run in</div>
+    <div class="cards">
+      <div class="card">
+        <div class="label">Countries</div>
+        <div class="value" id="country-count">—</div>
+        <div class="countries-line" id="country-list"></div>
+      </div>
+    </div>
+
+    <div class="section-head">Favourite places</div>
+    <ul class="places" id="places-list"></ul>
+  </div>
+
+  <div class="section-head">Find your next run</div>
+  <div class="search-row">
+    <input id="location-input" type="text" placeholder="A place name, or paste a Google Maps link…" autocomplete="off">
+    <button id="search-btn">Search</button>
+  </div>
+  <p class="search-hint">Looks up popular Strava running segments near that spot, closest to 5k / 10k / 15k.</p>
+
+  <div id="search-state"></div>
+  <div id="map"></div>
+  <div class="results" id="search-results"></div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+function decodePolyline(str) {
+  let index = 0, lat = 0, lng = 0, coordinates = [];
+  while (index < str.length) {
+    let shift = 0, result = 0, byte;
+    do {
+      byte = str.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+    lat += (result & 1) ? ~(result >> 1) : (result >> 1);
+
+    shift = 0; result = 0;
+    do {
+      byte = str.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+    lng += (result & 1) ? ~(result >> 1) : (result >> 1);
+
+    coordinates.push([lat / 1e5, lng / 1e5]);
+  }
+  return coordinates;
+}
+
+async function loadStats() {
+  const stateEl = document.getElementById('stats-state');
+  try {
+    const res = await fetch('/api/running-buddy/stats');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to load stats');
+
+    stateEl.style.display = 'none';
+    document.getElementById('stats-content').style.display = 'block';
+
+    const cards = document.getElementById('year-cards');
+    const { thisYear, lifetime, year } = data;
+
+    function card(label, value, sub) {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML = `<div class="label">${label}</div><div class="value">${value}</div>${sub ? `<div class="sub">${sub}</div>` : ''}`;
+      return div;
+    }
+
+    cards.appendChild(card('Runs in ' + year, thisYear.totalRuns, thisYear.totalDistanceKm + ' km total'));
+    if (thisYear.longestRun) cards.appendChild(card('Longest run', thisYear.longestRun.distanceKm + ' km', thisYear.longestRun.name));
+    if (thisYear.mostElevation) cards.appendChild(card('Most elevation', thisYear.mostElevation.elevationM + ' m', thisYear.mostElevation.name));
+    if (thisYear.fastestPace) cards.appendChild(card('Fastest pace', thisYear.fastestPace.pace + ' /km', thisYear.fastestPace.name));
+
+    document.getElementById('country-count').textContent = lifetime.countryCount;
+    document.getElementById('country-list').textContent = lifetime.countries.join(' · ');
+
+    const placesList = document.getElementById('places-list');
+    if (lifetime.favouritePlaces.length === 0) {
+      placesList.innerHTML = '<li>No GPS runs yet.</li>';
+    } else {
+      lifetime.favouritePlaces.forEach((p) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${p.name}</span><span class="count">${p.runs} runs</span>`;
+        placesList.appendChild(li);
+      });
+    }
+  } catch (err) {
+    stateEl.textContent = 'Strava isn\'t connected yet: ' + err.message;
+    stateEl.className = 'error-msg';
+  }
+}
+
+let map = null;
+function ensureMap() {
+  const mapEl = document.getElementById('map');
+  mapEl.style.display = 'block';
+  if (!map) {
+    map = L.map('map');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 18,
+    }).addTo(map);
+  }
+  return map;
+}
+
+const colors = { '5k': '#473BCE', '10k': '#6C5FDD', '15k': '#B4232A' };
+
+async function runSearch() {
+  const location = document.getElementById('location-input').value.trim();
+  const stateEl = document.getElementById('search-state');
+  const resultsEl = document.getElementById('search-results');
+  resultsEl.innerHTML = '';
+  document.getElementById('map').style.display = 'none';
+
+  if (!location) {
+    stateEl.textContent = '';
+    return;
+  }
+
+  stateEl.className = 'state-msg';
+  stateEl.textContent = 'Searching…';
+
+  try {
+    const res = await fetch('/api/running-buddy/search?location=' + encodeURIComponent(location));
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Search failed');
+
+    stateEl.textContent = '';
+
+    const leafletMap = ensureMap();
+    const allLayers = [];
+
+    data.results.forEach((bucket) => {
+      const col = document.createElement('div');
+      col.className = 'result-col';
+      col.innerHTML = `<h3>${bucket.target}</h3>`;
+
+      if (bucket.approximate) {
+        const note = document.createElement('p');
+        note.className = 'approx-note';
+        note.textContent = 'No close match in the area — showing the nearest available.';
+        col.appendChild(note);
+      }
+
+      if (bucket.segments.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'state-msg';
+        p.textContent = 'No segments found nearby.';
+        col.appendChild(p);
+      }
+
+      bucket.segments.forEach((seg) => {
+        const div = document.createElement('div');
+        div.className = 'segment';
+        div.innerHTML = `
+          <div class="name"><a href="https://www.strava.com/segments/${seg.id}" target="_blank" rel="noopener">${seg.name}</a></div>
+          <div class="meta">${seg.distanceKm} km · ${seg.elevationM} m gain · ${seg.effortCount} efforts</div>
+        `;
+        col.appendChild(div);
+
+        if (seg.polyline) {
+          const latlngs = decodePolyline(seg.polyline);
+          const line = L.polyline(latlngs, { color: colors[bucket.target] || '#473BCE', weight: 4 }).addTo(leafletMap);
+          allLayers.push(line);
+        }
+      });
+
+      resultsEl.appendChild(col);
+    });
+
+    if (allLayers.length) {
+      const group = L.featureGroup(allLayers);
+      leafletMap.fitBounds(group.getBounds().pad(0.15));
+    } else {
+      leafletMap.setView([data.location.lat, data.location.lon], 13);
+    }
+  } catch (err) {
+    stateEl.className = 'error-msg';
+    stateEl.textContent = err.message;
+  }
+}
+
+document.getElementById('search-btn').addEventListener('click', runSearch);
+document.getElementById('location-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') runSearch();
+});
+
+loadStats();
+</script>
+</body>
+</html>
