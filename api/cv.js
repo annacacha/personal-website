@@ -477,10 +477,9 @@ button:hover{background:var(--indigo);border-color:var(--indigo);}
 <body>
 <div class="card">
   <h1>Anna's CV</h1>
-  <p class="sub">Enter the code to view the CV.</p>
   <form method="POST" action="/api/cv-verify">
     ${error ? '<p class="error">Incorrect code, try again.</p>' : ''}
-    <label for="code">Code prompt</label>
+    <label for="code">Code</label>
     <input type="text" id="code" name="code" inputmode="numeric" autocomplete="off" autofocus>
     <button type="submit">Open Sesame</button>
   </form>
