@@ -380,7 +380,7 @@ if (sessionStorage.getItem('cvJustUnlocked')) {
       <dd><a class="ref" href="https://codefirstgirls.com/">Code First Girls</a>, <a class="ref" href="https://ourstemjourney.com/">Our STEM Journey</a>, <a class="ref" href="https://supernovas.eitcommunity.eu/women2invest/">Women2Invest</a></dd>
 
       <dt>Outside work</dt>
-      <dd>Running, road cycling, swimming</dd>
+      <dd>Running, road cycling, swimming, reading, art exhibitions</dd>
     </dl>
   </section>
 
