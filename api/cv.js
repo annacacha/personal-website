@@ -476,13 +476,13 @@ button:hover{background:var(--indigo);border-color:var(--indigo);}
 </head>
 <body>
 <div class="card">
-  <h1>Anna Cachadiña</h1>
+  <h1>Anna's CV</h1>
   <p class="sub">Enter the code to view the CV.</p>
   <form method="POST" action="/api/cv-verify">
     ${error ? '<p class="error">Incorrect code, try again.</p>' : ''}
-    <label for="code">Code</label>
+    <label for="code">Code prompt</label>
     <input type="text" id="code" name="code" inputmode="numeric" autocomplete="off" autofocus>
-    <button type="submit">Unlock</button>
+    <button type="submit">Open Sesame</button>
   </form>
 </div>
 </body>
