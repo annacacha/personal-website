@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anna Cachadiña - CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14151A;
+  --muted:#6B6E7B;
+  --rule:#E3E3E9;
+  --indigo:#473BCE;
+  --indigo-light:#6C5FDD;
+  --paper:#FFFFFF;
+  --wash:#F6F6F9;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--wash);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+.sheet{
+  max-width:820px;
+  margin:0 auto;
+  background:var(--paper);
+  padding:26px 68px 34px;
+}
+
+/* ---------- masthead ---------- */
+.masthead{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:32px;
+  padding-bottom:18px;
+  border-bottom:2px solid var(--ink);
+}
+.name{
+  font-family:var(--serif);
+  font-variation-settings:"SOFT" 0,"WONK" 1;
+  font-weight:600;
+  font-size:42px;
+  line-height:1.02;
+  letter-spacing:-0.022em;
+  margin:0;
+}
+.contact{
+  font-family:var(--mono);
+  font-size:11.5px;
+  line-height:1.85;
+  text-align:right;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.contact a{color:var(--indigo-light);text-decoration:none;}
+.contact a:hover{color:var(--ink);}
+.print-only{display:none;}
+
+/* ---------- sections ---------- */
+.section{margin-top:34px;}
+.section:first-of-type{margin-top:26px;}
+.section-head{
+  font-family:var(--mono);
+  font-size:10.5px;
+  font-weight:500;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  color:var(--indigo);
+  padding-bottom:7px;
+  margin-bottom:18px;
+  border-bottom:1px solid var(--rule);
+}
+
+/* ---------- entries ---------- */
+.entry{
+  display:grid;
+  grid-template-columns:124px 1fr;
+  gap:24px;
+  margin-bottom:24px;
+}
+.entry:last-child{margin-bottom:0;}
+.rail{
+  font-family:var(--mono);
+  font-size:11px;
+  line-height:1.7;
+  color:var(--muted);
+  padding-top:3px;
+}
+.rail .place{display:block;color:var(--ink);}
+.role{
+  font-size:15.5px;
+  font-weight:600;
+  letter-spacing:-0.01em;
+  margin:0 0 3px;
+}
+.role .org{color:var(--indigo);}
+.role-note{font-size:13px;color:var(--muted);margin:0 0 9px;}
+ul.points{margin:0;padding:0;list-style:none;}
+ul.points li{
+  position:relative;
+  padding-left:15px;
+  margin-bottom:6px;
+  font-size:14px;
+  line-height:1.5;
+}
+ul.points li:last-child{margin-bottom:0;}
+ul.points li::before{
+  content:"";
+  position:absolute;
+  left:1px;top:7.5px;
+  width:3.5px;height:3.5px;
+  border-radius:50%;
+  background:var(--indigo);
+}
+.metric{font-family:var(--mono);font-size:12.5px;font-weight:500;}
+
+/* ---------- inline reference links ---------- */
+a.ref{
+  color:var(--indigo-light);
+  text-decoration:none;
+  font-weight:500;
+}
+a.ref:hover{color:var(--ink);}
+a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
+
+/* ---------- built grid ---------- */
+.built{display:grid;grid-template-columns:1fr 1fr;gap:19px 28px;}
+.made{padding-top:0;}
+.made h4{margin:0 0 3px;font-size:14px;font-weight:600;letter-spacing:-0.01em;}
+.made h4 a{color:var(--indigo-light);text-decoration:none;}
+.made h4 a:hover{color:var(--ink);}
+.made p{margin:0;font-size:13px;line-height:1.45;color:var(--ink);}
+
+/* ---------- details ---------- */
+.details{
+  display:grid;
+  grid-template-columns:124px 1fr;
+  gap:8px 24px;
+  font-size:14px;
+}
+.details dt{font-family:var(--mono);font-size:11px;color:var(--muted);padding-top:2px;}
+.details dd{margin:0;}
+
+.todo{
+  background:rgba(71,59,206,.09);
+  border-bottom:1.5px dotted var(--indigo);
+  padding:0 2px;
+  color:var(--indigo);
+}
+
+/* ---------- toolbar ---------- */
+.toolbar{max-width:820px;margin:22px auto 0;display:flex;justify-content:flex-end;}
+.toolbar button{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.04em;
+  padding:8px 14px;
+  border:1px solid var(--ink);
+  border-radius:2px;
+  background:var(--ink);
+  color:#fff;
+  cursor:pointer;
+}
+.toolbar button:hover{background:var(--indigo);border-color:var(--indigo);}
+.toolbar button:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
+
+/* ---------- responsive ---------- */
+@media screen and (max-width:720px){
+  .sheet{padding:36px 24px 48px;}
+  .masthead{flex-direction:column;align-items:flex-start;gap:14px;}
+  .contact{text-align:left;}
+  .name{font-size:32px;}
+  .entry,.details{grid-template-columns:1fr;gap:8px;}
+  .rail{padding-top:0;}
+  .rail .place{display:inline;}
+  .rail .place::before{content:" · ";}
+  .built{grid-template-columns:1fr;}
+  .toolbar{padding:0 24px;}
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
+
+/* ---------- print ----------
+
+   TWO WAYS TO SET PAGE MARGINS. Currently using (A).
+
+   (A) IN USE - zero page margin, spacing via .sheet padding.
+       Chrome draws its date/title/URL header inside the top page margin,
+       so a margin of 0 removes it with no action needed from the reader.
+       Cost: page 2 onward starts flush against the paper's top edge,
+       because .sheet padding only applies once at the very start.
+
+   (B) ALTERNATIVE - real page margins on every page.
+       Swap the two @page rules below, then untick "Headers and footers"
+       under More settings in the print dialog. Chrome remembers the
+       setting. Every page gets an even margin, top and bottom.
+
+         @page{size:A4;margin:13mm 15mm;}
+         .sheet{max-width:none;padding:0;}
+
+   Margins on page 1 only, with margins from page 2, isn't reachable:
+   @page:first exists, but any page given a top margin gets Chrome's
+   header back unless the reader unticks the box, which is (B) anyway.
+*/
+@page{size:A4;margin:0;}
+@media print{
+  body{
+    background:#fff;
+    font-size:9.2pt;
+    line-height:1.4;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .sheet{max-width:none;padding:5mm 15mm 3mm;}
+  .toolbar{display:none;}
+  .print-only{display:block;}
+  .masthead{flex-direction:row;align-items:flex-end;}
+  .contact{text-align:right;}
+  .rail .place{display:block;}
+  .rail .place::before{content:none;}
+  .todo{background:none;border:none;color:inherit;}
+  .name{font-size:22pt;}
+  .contact{font-size:7.4pt;line-height:1.65;}
+  .section{margin-top:10.5pt;}
+  .section:first-of-type{margin-top:10pt;}
+  .section-head{font-size:7.2pt;margin-bottom:6.5pt;padding-bottom:3.5pt;page-break-after:avoid;}
+  .entry{grid-template-columns:92px 1fr;gap:14px;margin-bottom:7.5pt;
+         page-break-inside:avoid;break-inside:avoid;}
+  .rail{font-size:7.8pt;}
+  .role{font-size:10.2pt;}
+  .role-note{font-size:8.4pt;margin-bottom:3.5pt;}
+  ul.points li{font-size:8.8pt;margin-bottom:2pt;line-height:1.33;}
+  .made{page-break-inside:avoid;break-inside:avoid;}
+  .made h4{font-size:9.2pt;}
+  .made p{font-size:8.4pt;}
+  .built{gap:8pt 20pt;}
+  .details{font-size:8.8pt;}
+  .details{gap:5pt 20px;}
+  a{text-decoration:none;border:none;}
+  .contact a{color:var(--indigo-light);border:none;}
+  a.ref,.made h4 a{color:var(--indigo-light);border:none;}
+}
+</style>
+</head>
+<body>
+
+<main class="sheet">
+
+  <header class="masthead">
+    <h1 class="name">Anna Cachadiña</h1>
+    <div class="contact">
+      London<br>
+      <a href="mailto:annacachadina@gmail.com">annacachadina@gmail.com</a><br>
+      <a href="https://www.linkedin.com/in/anna-cachadina-abello/">linkedin.com/in/anna-cachadina-abello</a><br>
+      <span class="print-only">+44 7365 922 488</span>
+    </div>
+  </header>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section class="section">
+    <h2 class="section-head">Experience</h2>
+
+    <div class="entry">
+      <div class="rail">2023-now<br><span class="place">London</span></div>
+      <div>
+        <h3 class="role">Investment team · <span class="org"><a class="ref" href="https://crane.vc">Crane Venture Partners</a></span></h3>
+        <p class="role-note">Early stage investing across AI infra, deep tech and data-first companies</p>
+        <ul class="points">
+          <li>Own sourcing and diligence across AI infra and deep tech, and the IC memos for new investments and follow-ons - including Gable, ConfigHub, Bluefish AI, Sandgarden and Pavo AI.</li>
+          <li>Sourced and led investments in Chiral, one of the biggest seed rounds ever led at Crane, and Hacktron AI. Hold board observer seats in both, as well as Tuio and Qovery.</li>
+          <li>Replaced manual sourcing with an agent pipeline wired into our internal systems to find, enrich and follow up on deals. Also led the project management to track portfolio metrics and streamline reporting.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="rail">2023<br><span class="place">London</span></div>
+      <div>
+        <h3 class="role">Investment team · <span class="org"><a class="ref" href="https://www.speedinvest.com">Speedinvest</a></span></h3>
+        <ul class="points">
+          <li>Covered B2B SaaS, developer tools, cloud infrastructure and AI.</li>
+          <li>Built the data-driven sourcing and screening approach the team adopted, replacing ad-hoc pipeline tracking.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="rail">2021-2023<br><span class="place">London</span></div>
+      <div>
+        <h3 class="role">Engineering · <span class="org"><a class="ref" href="https://www.goldmansachs.com">Goldman Sachs</a></span></h3>
+        <p class="role-note">Global Investment Research, Analytics team</p>
+        <ul class="points">
+          <li>Shipped internal tools for research clients, drafting and negotiating requirements directly with them.</li>
+          <li>Earned ownership of an entire tool and its stack after demonstrating high agency and ability.</li>
+          <li>Managed newcomers to the team as well as summer analysts.</li>
+          <li>Represented Global Investment Research on panels and at recruiting events.</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= BUILT ================= -->
+  <section class="section">
+    <h2 class="section-head">Built and run</h2>
+    <div class="built">
+
+      <div class="made">
+        <h4>NEST</h4>
+        <p>Operator and angel investing community for startup builders across London, Paris, Berlin and Munich. Invested through SPVs into ElevenLabs, Seamflow (Northzone), Briefcase (Earlybird) and others.</p>
+      </div>
+
+      <div class="made">
+        <h4><a href="http://ai.engineer/">AI Engineer London</a></h4>
+        <p>Started the London chapter alongside <a class="ref" href="https://x.com/dctanner">Damian</a>, <a class="ref" href="https://x.com/robbiehudson">Rob</a> and <a class="ref" href="https://www.linkedin.com/in/will-caplan-45a173194/">Will</a>. Community for builders actually shipping AI systems. Hosted <a class="ref" href="https://x.com/steipete">Peter Steinberger</a> (OpenClaw), <a class="ref" href="https://x.com/samuelcolvin">Samuel Colvin</a> (Pydantic), <a class="ref" href="https://x.com/RealMattCarey">Matt Carey</a> (Cloudflare) and <a class="ref" href="https://x.com/badlogicgames">Mario Zechner</a> (Pi), among others.</p>
+      </div>
+
+      <div class="made">
+        <h4><a href="https://www.babyvc.co/">Baby VC</a> - UK Community Lead</h4>
+        <p>Ran the UK community and its first bootcamp since 2022.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= EDUCATION ================= -->
+  <section class="section">
+    <h2 class="section-head">Education</h2>
+
+    <div class="entry">
+      <div class="rail">2018-2021<br><span class="place">London</span></div>
+      <div>
+        <h3 class="role">BSc (Hons) Computer Science with Artificial Intelligence · <span class="org"><a class="ref" href="https://www.kcl.ac.uk">King's College London</a></span></h3>
+        <p class="role-note">First Class Honours, specialising in supervised, unsupervised and reinforcement learning, and AI planning</p>
+        <ul class="points">
+          <li>Dissertation (First Class): automated classification of YouTube comments on educational videos, using BERT.</li>
+          <li>KCL Tech Society committee member, university's largest tech society</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="rail">2016-2018<br><span class="place">Barcelona</span></div>
+      <div>
+        <h3 class="role">International Baccalaureate · <span class="org"><a class="ref" href="https://www.cmontserrat.org/">Col·legi Montserrat</a></span></h3>
+        <p class="role-note">Higher Level: Mathematics, Business, English</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= EARLY ================= -->
+  <section class="section">
+    <h2 class="section-head">Earlier, at sixteen</h2>
+    <div class="built">
+
+      <div class="made">
+        <h4>Winner - <a href="https://mschools.com/">mSchools App Awards 2016</a></h4>
+        <p>Built Kofu, a social app that took first place in its category; owned the programming and database work.</p>
+      </div>
+
+      <div class="made">
+        <h4>National winner - <a href="http://entrepreneurialteen.com/events/ja-social-innovation-relay">Social Innovation Relay 2016</a></h4>
+        <p>Co-founded Reckap. Negotiated suppliers down on bespoke production of recycled-material sun-protection caps.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DETAILS ================= -->
+  <section class="section">
+    <h2 class="section-head">Details</h2>
+    <dl class="details">
+      <dt>Languages</dt>
+      <dd>Spanish and Catalan (native), English (fluent), French (basic)</dd>
+
+      <dt>Mentoring</dt>
+      <dd><a class="ref" href="https://codefirstgirls.com/">Code First Girls</a>, <a class="ref" href="https://ourstemjourney.com/">Our STEM Journey</a>, <a class="ref" href="https://supernovas.eitcommunity.eu/women2invest/">Women2Invest</a></dd>
+
+      <dt>Outside work</dt>
+      <dd>Running, road cycling, swimming</dd>
+    </dl>
+  </section>
+
+</main>
+
+<div class="toolbar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+</body>
+</html>
