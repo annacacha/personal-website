@@ -10,7 +10,7 @@ function page(title, bodyHtml) {
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#14151A; --muted:#6B6E7B; --rule:#E3E3E9; --indigo:#473BCE;
+  --ink:#14151A; --muted:#6B6E7B; --rule:#E3E3E9; --accent:#C2571B;
   --paper:#FFFFFF; --wash:#F6F6F9;
   --serif:"Fraunces",Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
@@ -23,7 +23,7 @@ h1{font-family:var(--serif);font-variation-settings:"SOFT" 0,"WONK" 1;font-weigh
 p{font-size:14px;line-height:1.6;color:var(--muted);margin:0 0 14px;}
 code.box{display:block;font-family:var(--mono);font-size:13px;background:var(--wash);border:1px solid var(--rule);border-radius:2px;padding:12px 14px;word-break:break-all;margin:0 0 14px;color:var(--ink);}
 .warn{font-size:12.5px;color:#B4232A;}
-a{color:var(--indigo);}
+a{color:var(--accent);}
 </style>
 </head>
 <body>

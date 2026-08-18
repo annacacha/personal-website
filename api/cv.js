@@ -12,8 +12,8 @@ const CV_HTML = `<!DOCTYPE html>
   --ink:#14151A;
   --muted:#6B6E7B;
   --rule:#E3E3E9;
-  --indigo:#473BCE;
-  --indigo-light:#6C5FDD;
+  --accent:#C2571B;
+  --accent-light:#E2793D;
   --paper:#FFFFFF;
   --wash:#F6F6F9;
   --serif:"Fraunces",Georgia,serif;
@@ -66,7 +66,7 @@ body{
   color:var(--muted);
   white-space:nowrap;
 }
-.contact a{color:var(--indigo-light);text-decoration:none;}
+.contact a{color:var(--accent-light);text-decoration:none;}
 .contact a:hover{color:var(--ink);}
 .print-only{display:none;}
 
@@ -79,7 +79,7 @@ body{
   font-weight:500;
   letter-spacing:0.13em;
   text-transform:uppercase;
-  color:var(--indigo);
+  color:var(--accent);
   padding-bottom:7px;
   margin-bottom:18px;
   border-bottom:1px solid var(--rule);
@@ -107,7 +107,7 @@ body{
   letter-spacing:-0.01em;
   margin:0 0 3px;
 }
-.role .org{color:var(--indigo);}
+.role .org{color:var(--accent);}
 .role-note{font-size:13px;color:var(--muted);margin:0 0 9px;}
 ul.points{margin:0;padding:0;list-style:none;}
 ul.points li{
@@ -124,24 +124,24 @@ ul.points li::before{
   left:1px;top:7.5px;
   width:3.5px;height:3.5px;
   border-radius:50%;
-  background:var(--indigo);
+  background:var(--accent);
 }
 .metric{font-family:var(--mono);font-size:12.5px;font-weight:500;}
 
 /* ---------- inline reference links ---------- */
 a.ref{
-  color:var(--indigo-light);
+  color:var(--accent-light);
   text-decoration:none;
   font-weight:500;
 }
 a.ref:hover{color:var(--ink);}
-a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
+a.ref:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
 /* ---------- built grid ---------- */
 .built{display:grid;grid-template-columns:1fr 1fr;gap:19px 28px;}
 .made{padding-top:0;}
 .made h4{margin:0 0 3px;font-size:14px;font-weight:600;letter-spacing:-0.01em;}
-.made h4 a{color:var(--indigo-light);text-decoration:none;}
+.made h4 a{color:var(--accent-light);text-decoration:none;}
 .made h4 a:hover{color:var(--ink);}
 .made p{margin:0;font-size:13px;line-height:1.45;color:var(--ink);}
 
@@ -156,10 +156,10 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
 .details dd{margin:0;}
 
 .todo{
-  background:rgba(71,59,206,.09);
-  border-bottom:1.5px dotted var(--indigo);
+  background:rgba(194,87,27,.09);
+  border-bottom:1.5px dotted var(--accent);
   padding:0 2px;
-  color:var(--indigo);
+  color:var(--accent);
 }
 
 /* ---------- toolbar ---------- */
@@ -175,8 +175,8 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
   color:#fff;
   cursor:pointer;
 }
-.toolbar button:hover{background:var(--indigo);border-color:var(--indigo);}
-.toolbar button:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
+.toolbar button:hover{background:var(--accent);border-color:var(--accent);}
+.toolbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
 /* ---------- responsive ---------- */
 @media screen and (max-width:720px){
@@ -193,6 +193,13 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
 }
 
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
+
+.door-panel{position:fixed;top:0;bottom:0;width:50%;background:var(--ink);z-index:9999;transition:transform .6s cubic-bezier(.65,0,.35,1);pointer-events:none;}
+.door-left{left:0;transform:translateX(-100%);}
+.door-right{right:0;transform:translateX(100%);}
+html.door-closed .door-left{transform:translateX(0);}
+html.door-closed .door-right{transform:translateX(0);}
+@media (prefers-reduced-motion:reduce){.door-panel{transition:none;}}
 
 @page{size:A4;margin:0;}
 @media print{
@@ -229,12 +236,20 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
   .details{font-size:8.8pt;}
   .details{gap:5pt 20px;}
   a{text-decoration:none;border:none;}
-  .contact a{color:var(--indigo-light);border:none;}
-  a.ref,.made h4 a{color:var(--indigo-light);border:none;}
+  .contact a{color:var(--accent-light);border:none;}
+  a.ref,.made h4 a{color:var(--accent-light);border:none;}
 }
 </style>
 </head>
 <body>
+<script>
+if (sessionStorage.getItem('cvJustUnlocked')) {
+  document.documentElement.classList.add('door-closed');
+  sessionStorage.removeItem('cvJustUnlocked');
+}
+</script>
+<div class="door-panel door-left"></div>
+<div class="door-panel door-right"></div>
 
 <main class="sheet">
 
@@ -375,6 +390,13 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
   <button onclick="window.print()">Print / Save as PDF</button>
 </div>
 
+<script>
+if (document.documentElement.classList.contains('door-closed')) {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.documentElement.classList.remove('door-closed');
+  }));
+}
+</script>
 </body>
 </html>
 `;
@@ -394,7 +416,7 @@ function gateHtml(error) {
   --ink:#14151A;
   --muted:#6B6E7B;
   --rule:#E3E3E9;
-  --indigo:#473BCE;
+  --accent:#C2571B;
   --paper:#FFFFFF;
   --wash:#F6F6F9;
   --serif:"Fraunces",Georgia,serif;
@@ -453,7 +475,7 @@ input[type=text]{
   margin-bottom:16px;
   letter-spacing:0.06em;
 }
-input[type=text]:focus{outline:2px solid var(--indigo);outline-offset:0;border-color:var(--indigo);}
+input[type=text]:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent);}
 button{
   width:100%;
   font-family:var(--mono);
@@ -466,15 +488,23 @@ button{
   color:#fff;
   cursor:pointer;
 }
-button:hover{background:var(--indigo);border-color:var(--indigo);}
+button:hover{background:var(--accent);border-color:var(--accent);}
 .error{
   font-size:12.5px;
   color:#B4232A;
   margin:0 0 16px;
 }
+.door-panel{position:fixed;top:0;bottom:0;width:50%;background:var(--ink);z-index:9999;transition:transform .6s cubic-bezier(.65,0,.35,1);pointer-events:none;}
+.door-left{left:0;transform:translateX(-100%);}
+.door-right{right:0;transform:translateX(100%);}
+html.door-closed .door-left{transform:translateX(0);}
+html.door-closed .door-right{transform:translateX(0);}
+@media (prefers-reduced-motion:reduce){.door-panel{transition:none;}}
 </style>
 </head>
 <body>
+<div class="door-panel door-left"></div>
+<div class="door-panel door-right"></div>
 <div class="card">
   <h1>Anna's CV</h1>
   <form method="POST" action="/api/cv-verify">
@@ -484,6 +514,34 @@ button:hover{background:var(--indigo);border-color:var(--indigo);}
     <button type="submit">Open Sesame</button>
   </form>
 </div>
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button');
+  const code = form.querySelector('#code').value;
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/cv-verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+    const data = await res.json().catch(() => ({}));
+
+    if (res.ok && data.ok) {
+      sessionStorage.setItem('cvJustUnlocked', '1');
+      document.documentElement.classList.add('door-closed');
+      setTimeout(() => { window.location.href = '/cv'; }, 550);
+    } else {
+      window.location.href = '/cv?error=1';
+    }
+  } catch (err) {
+    btn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
 `;
