@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+const CV_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -194,28 +194,6 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
 
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
 
-/* ---------- print ----------
-
-   TWO WAYS TO SET PAGE MARGINS. Currently using (A).
-
-   (A) IN USE - zero page margin, spacing via .sheet padding.
-       Chrome draws its date/title/URL header inside the top page margin,
-       so a margin of 0 removes it with no action needed from the reader.
-       Cost: page 2 onward starts flush against the paper's top edge,
-       because .sheet padding only applies once at the very start.
-
-   (B) ALTERNATIVE - real page margins on every page.
-       Swap the two @page rules below, then untick "Headers and footers"
-       under More settings in the print dialog. Chrome remembers the
-       setting. Every page gets an even margin, top and bottom.
-
-         @page{size:A4;margin:13mm 15mm;}
-         .sheet{max-width:none;padding:0;}
-
-   Margins on page 1 only, with margins from page 2, isn't reachable:
-   @page:first exists, but any page given a top margin gets Chrome's
-   header back unless the reader unticks the box, which is (B) anyway.
-*/
 @page{size:A4;margin:0;}
 @media print{
   body{
@@ -270,7 +248,6 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
     </div>
   </header>
 
-  <!-- ================= EXPERIENCE ================= -->
   <section class="section">
     <h2 class="section-head">Experience</h2>
 
@@ -314,7 +291,6 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
 
   </section>
 
-  <!-- ================= BUILT ================= -->
   <section class="section">
     <h2 class="section-head">Built and run</h2>
     <div class="built">
@@ -337,7 +313,6 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
     </div>
   </section>
 
-  <!-- ================= EDUCATION ================= -->
   <section class="section">
     <h2 class="section-head">Education</h2>
 
@@ -363,7 +338,6 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
 
   </section>
 
-  <!-- ================= EARLY ================= -->
   <section class="section">
     <h2 class="section-head">Earlier, at sixteen</h2>
     <div class="built">
@@ -381,7 +355,6 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
     </div>
   </section>
 
-  <!-- ================= DETAILS ================= -->
   <section class="section">
     <h2 class="section-head">Details</h2>
     <dl class="details">
@@ -404,3 +377,143 @@ a.ref:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;}
 
 </body>
 </html>
+`;
+
+function gateHtml(error) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anna Cachadiña - CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14151A;
+  --muted:#6B6E7B;
+  --rule:#E3E3E9;
+  --indigo:#473BCE;
+  --paper:#FFFFFF;
+  --wash:#F6F6F9;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--wash);
+  color:var(--ink);
+  font-family:var(--sans);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.card{
+  background:var(--paper);
+  padding:40px 36px;
+  width:100%;
+  max-width:320px;
+  border-radius:4px;
+  box-shadow:0 1px 2px rgba(20,21,26,.06), 0 8px 24px rgba(20,21,26,.06);
+}
+h1{
+  font-family:var(--serif);
+  font-variation-settings:"SOFT" 0,"WONK" 1;
+  font-weight:600;
+  font-size:24px;
+  letter-spacing:-0.02em;
+  margin:0 0 6px;
+}
+p.sub{
+  margin:0 0 22px;
+  font-size:13px;
+  color:var(--muted);
+}
+label{
+  display:block;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+input[type=text]{
+  width:100%;
+  font-family:var(--mono);
+  font-size:16px;
+  padding:10px 12px;
+  border:1px solid var(--rule);
+  border-radius:2px;
+  margin-bottom:16px;
+  letter-spacing:0.06em;
+}
+input[type=text]:focus{outline:2px solid var(--indigo);outline-offset:0;border-color:var(--indigo);}
+button{
+  width:100%;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.04em;
+  padding:11px 14px;
+  border:1px solid var(--ink);
+  border-radius:2px;
+  background:var(--ink);
+  color:#fff;
+  cursor:pointer;
+}
+button:hover{background:var(--indigo);border-color:var(--indigo);}
+.error{
+  font-size:12.5px;
+  color:#B4232A;
+  margin:0 0 16px;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Anna Cachadiña</h1>
+  <p class="sub">Enter the code to view the CV.</p>
+  <form method="POST" action="/api/cv-verify">
+    ${error ? '<p class="error">Incorrect code, try again.</p>' : ''}
+    <label for="code">Code</label>
+    <input type="text" id="code" name="code" inputmode="numeric" autocomplete="off" autofocus>
+    <button type="submit">Unlock</button>
+  </form>
+</div>
+</body>
+</html>
+`;
+}
+
+function parseCookies(header) {
+  const cookies = {};
+  if (!header) return cookies;
+  header.split(';').forEach((pair) => {
+    const idx = pair.indexOf('=');
+    if (idx === -1) return;
+    const key = pair.slice(0, idx).trim();
+    const value = pair.slice(idx + 1).trim();
+    cookies[key] = decodeURIComponent(value);
+  });
+  return cookies;
+}
+
+module.exports = (req, res) => {
+  const cookies = parseCookies(req.headers.cookie);
+  const authed = cookies.cv_auth === 'unlocked';
+
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+
+  if (authed) {
+    res.status(200).send(CV_HTML);
+    return;
+  }
+
+  const hadError = req.query && req.query.error === '1';
+  res.status(hadError ? 401 : 200).send(gateHtml(hadError));
+};
