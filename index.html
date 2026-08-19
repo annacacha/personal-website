@@ -6,37 +6,256 @@
 <title>Anna Cachadiña</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#14151A;
-  --wash:#F6F6F9;
+  --bg:#2A1D15;
+  --fg:#F2E8DA;
+  --muted:#AD9A83;
+  --track:#4A3626;
+  --accent:#C2571B;
+  --accent2:#D4A24C;
   --serif:"Fraunces",Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
 }
 *{box-sizing:border-box;}
 html,body{height:100%;}
 body{
   margin:0;
-  background:var(--wash);
-  color:var(--ink);
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+header{
+  padding:24px 28px;
+}
+header a{
+  font-family:var(--sans);
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--fg);
+  text-decoration:none;
+}
+
+main{
+  flex:1;
   display:flex;
   align-items:center;
-  justify-content:center;
-  -webkit-font-smoothing:antialiased;
+  padding:0 28px;
 }
-h1{
+.content{
+  max-width:640px;
+  margin:0 auto;
+  width:100%;
+}
+
+.statement{
   font-family:var(--serif);
   font-variation-settings:"SOFT" 0,"WONK" 1;
-  font-weight:600;
-  font-size:clamp(32px,6vw,56px);
-  letter-spacing:-0.022em;
+  font-size:clamp(19px,3vw,27px);
+  line-height:1.55;
+  letter-spacing:-0.01em;
   margin:0;
-  padding:0 24px;
-  text-align:center;
 }
+.statement .counter{
+  color:var(--accent);
+  font-weight:600;
+}
+
+.placeholder-line{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:18px;
+  color:var(--muted);
+  margin:0;
+}
+
+.field{margin-bottom:20px;}
+.field:last-child{margin-bottom:0;}
+.field .label{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:5px;
+}
+.field .value{
+  font-size:16px;
+  line-height:1.55;
+}
+.field .value a{color:var(--fg);}
+.field .value a:hover{color:var(--accent);}
+.value.placeholder, .value .placeholder{
+  color:var(--muted);
+  font-style:italic;
+}
+
+.slider-zone{
+  padding:0 28px 40px;
+}
+.slider-wrap{
+  max-width:640px;
+  margin:0 auto;
+}
+input[type=range]{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:14px;
+  background:transparent;
+  cursor:pointer;
+  margin:0 0 12px;
+}
+input[type=range]:focus{outline:none;}
+input[type=range]::-webkit-slider-runnable-track{
+  height:1px;
+  background:var(--track);
+}
+input[type=range]::-moz-range-track{
+  height:1px;
+  background:var(--track);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  height:13px;
+  width:13px;
+  border-radius:50%;
+  background:var(--fg);
+  margin-top:-6px;
+  transition:background .15s, transform .15s;
+}
+input[type=range]::-webkit-slider-thumb:hover{background:var(--accent);}
+input[type=range]:active::-webkit-slider-thumb{background:var(--accent);transform:scale(1.15);}
+input[type=range]::-moz-range-thumb{
+  height:13px;
+  width:13px;
+  border:none;
+  border-radius:50%;
+  background:var(--fg);
+  transition:background .15s, transform .15s;
+}
+input[type=range]::-moz-range-thumb:hover{background:var(--accent);}
+
+.slider-labels{
+  display:flex;
+  justify-content:space-between;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:14px;
+  color:var(--accent2);
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;}}
 </style>
 </head>
 <body>
-<h1>Anna Cachadiña</h1>
+
+<header>
+  <a href="/">Anna Cachadiña</a>
+</header>
+
+<main>
+  <div class="content" id="output"></div>
+</main>
+
+<div class="slider-zone">
+  <div class="slider-wrap">
+    <input type="range" id="slider" min="0" max="8" step="1" value="4">
+    <div class="slider-labels">
+      <span>Shut up</span>
+      <span>Tell me more</span>
+    </div>
+  </div>
+</div>
+
+<script>
+function field(label, valueHtml) {
+  return '<div class="field"><div class="label">' + label + '</div><div class="value">' + valueHtml + '</div></div>';
+}
+function placeholder(text) {
+  return '<span class="placeholder">[ ' + text + ' ]</span>';
+}
+
+var nameRole =
+  field('Name', 'Anna Cachadiña') +
+  field('Role', 'Investor, Crane Venture Partners');
+
+var landingExtra =
+  field('Social', 'LinkedIn: <a href="https://www.linkedin.com/in/anna-cachadina-abello/">anna-cachadina-abello</a> &middot; ' + placeholder('other socials')) +
+  field('Communities', 'NEST &middot; AI Engineer London &middot; Baby VC');
+
+var prevRolesExtra =
+  field('Previous roles', 'Speedinvest &middot; Goldman Sachs') +
+  field("Things I've enjoyed", placeholder('to be written'));
+
+var hobbiesExtra =
+  field('Hobbies', 'Running, road cycling, swimming, reading, art exhibitions &mdash; <a href="/running-buddy">see my running stats</a>');
+
+var bcnExtra =
+  field('Barcelona recommendations', placeholder('to be written')) +
+  field('Favourite colours', placeholder('to be written — orange, presumably'));
+
+var moreExtra =
+  field('Parents', placeholder('to be written')) +
+  field('Family', placeholder('to be written')) +
+  field('Photos', placeholder('photo gallery goes here')) +
+  field('What I wanted to be as a kid', placeholder('to be written')) +
+  field('Experiments', placeholder('to be written'));
+
+var states = [
+  '<p class="statement">my name is anna, but whatever, there are other <span class="counter" id="counter" data-target="2846192">0</span> in the world and it&rsquo;s the 20th most common name in the world.</p>',
+  '<p class="placeholder-line">[ &hellip; ]</p>',
+  '<p class="placeholder-line">[ &hellip; ]</p>',
+  nameRole,
+  nameRole + landingExtra,
+  nameRole + landingExtra + prevRolesExtra,
+  nameRole + landingExtra + prevRolesExtra + hobbiesExtra,
+  nameRole + landingExtra + prevRolesExtra + hobbiesExtra + bcnExtra,
+  nameRole + landingExtra + prevRolesExtra + hobbiesExtra + bcnExtra + moreExtra,
+];
+
+function animateCounter(el) {
+  var target = parseInt(el.dataset.target, 10);
+  var start = null;
+  var duration = 900;
+  function tick(ts) {
+    if (start === null) start = ts;
+    var t = Math.min((ts - start) / duration, 1);
+    var eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.floor(eased * target).toLocaleString() + ' Annas';
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+var slider = document.getElementById('slider');
+var output = document.getElementById('output');
+
+function render(value) {
+  output.innerHTML = states[value];
+  var counterEl = output.querySelector('#counter');
+  if (counterEl) animateCounter(counterEl);
+  try { sessionStorage.setItem('sliderPos', value); } catch (err) {}
+}
+
+var saved = null;
+try { saved = sessionStorage.getItem('sliderPos'); } catch (err) {}
+var initial = saved !== null ? parseInt(saved, 10) : 4;
+slider.value = initial;
+render(initial);
+
+slider.addEventListener('input', function () {
+  render(parseInt(slider.value, 10));
+});
+</script>
 </body>
 </html>

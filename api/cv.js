@@ -9,13 +9,13 @@ const CV_HTML = `<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#14151A;
-  --muted:#6B6E7B;
-  --rule:#E3E3E9;
+  --ink:#1C1410;
+  --muted:#8A7A63;
+  --rule:#E8DFD2;
   --accent:#C2571B;
   --accent-light:#E2793D;
-  --paper:#FFFFFF;
-  --wash:#F6F6F9;
+  --paper:#FFFCF7;
+  --wash:#F2EAE0;
   --serif:"Fraunces",Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
@@ -413,12 +413,14 @@ function gateHtml(error) {
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#14151A;
-  --muted:#6B6E7B;
-  --rule:#E3E3E9;
+  --ink:#1C1410;
+  --fg:#F2E8DA;
+  --muted:#AD9A83;
+  --rule:#4A3626;
   --accent:#C2571B;
-  --paper:#FFFFFF;
-  --wash:#F6F6F9;
+  --accent2:#D4A24C;
+  --paper:#2A1D15;
+  --wash:#1E140D;
   --serif:"Fraunces",Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
@@ -428,7 +430,7 @@ html,body{height:100%;}
 body{
   margin:0;
   background:var(--wash);
-  color:var(--ink);
+  color:var(--fg);
   font-family:var(--sans);
   display:flex;
   align-items:center;
@@ -441,7 +443,7 @@ body{
   width:100%;
   max-width:320px;
   border-radius:4px;
-  box-shadow:0 1px 2px rgba(20,21,26,.06), 0 8px 24px rgba(20,21,26,.06);
+  box-shadow:0 1px 2px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.25);
 }
 h1{
   font-family:var(--serif);
@@ -474,6 +476,8 @@ input[type=text]{
   border-radius:2px;
   margin-bottom:16px;
   letter-spacing:0.06em;
+  background:var(--wash);
+  color:var(--fg);
 }
 input[type=text]:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent);}
 button{
@@ -482,16 +486,16 @@ button{
   font-size:12px;
   letter-spacing:0.04em;
   padding:11px 14px;
-  border:1px solid var(--ink);
+  border:1px solid var(--accent);
   border-radius:2px;
-  background:var(--ink);
+  background:var(--accent);
   color:#fff;
   cursor:pointer;
 }
-button:hover{background:var(--accent);border-color:var(--accent);}
+button:hover{background:var(--accent2);border-color:var(--accent2);color:var(--ink);}
 .error{
   font-size:12.5px;
-  color:#B4232A;
+  color:#E4634A;
   margin:0 0 16px;
 }
 .door-panel{position:fixed;top:0;bottom:0;width:50%;background:var(--ink);z-index:9999;transition:transform .6s cubic-bezier(.65,0,.35,1);pointer-events:none;}
