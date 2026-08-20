@@ -65,11 +65,6 @@ main{
   letter-spacing:-0.01em;
   margin:0;
 }
-.statement .counter{
-  color:var(--accent);
-  font-weight:600;
-}
-
 .placeholder-line{
   font-family:var(--serif);
   font-style:italic;
@@ -193,57 +188,25 @@ var landingExtra =
   field('Social', 'LinkedIn: <a href="https://www.linkedin.com/in/anna-cachadina-abello/">anna-cachadina-abello</a> &middot; ' + placeholder('other socials')) +
   field('Communities', 'NEST &middot; AI Engineer London &middot; Baby VC');
 
-var prevRolesExtra =
-  field('Previous roles', 'Speedinvest &middot; Goldman Sachs') +
-  field("Things I've enjoyed", placeholder('to be written'));
-
-var hobbiesExtra =
-  field('Hobbies', 'Running, road cycling, swimming, reading, art exhibitions &mdash; <a href="/running-buddy">see my running stats</a>');
-
-var bcnExtra =
-  field('Barcelona recommendations', placeholder('to be written')) +
-  field('Favourite colours', placeholder('to be written — orange, presumably'));
-
-var moreExtra =
-  field('Parents', placeholder('to be written')) +
-  field('Family', placeholder('to be written')) +
-  field('Photos', placeholder('photo gallery goes here')) +
-  field('What I wanted to be as a kid', placeholder('to be written')) +
-  field('Experiments', placeholder('to be written'));
+var blank = '<p class="placeholder-line">[ &hellip; ]</p>';
 
 var states = [
-  '<p class="statement">my name is anna, but whatever, there are other <span class="counter" id="counter" data-target="2846192">0</span> in the world and it&rsquo;s the 20th most common name in the world.</p>',
-  '<p class="placeholder-line">[ &hellip; ]</p>',
-  '<p class="placeholder-line">[ &hellip; ]</p>',
-  nameRole,
+  '<p class="statement">I&rsquo;m Anna but whatever, there are like 12 million others.</p>',
+  blank,
+  blank,
+  blank,
   nameRole + landingExtra,
-  nameRole + landingExtra + prevRolesExtra,
-  nameRole + landingExtra + prevRolesExtra + hobbiesExtra,
-  nameRole + landingExtra + prevRolesExtra + hobbiesExtra + bcnExtra,
-  nameRole + landingExtra + prevRolesExtra + hobbiesExtra + bcnExtra + moreExtra,
+  blank,
+  blank,
+  blank,
+  blank,
 ];
-
-function animateCounter(el) {
-  var target = parseInt(el.dataset.target, 10);
-  var start = null;
-  var duration = 900;
-  function tick(ts) {
-    if (start === null) start = ts;
-    var t = Math.min((ts - start) / duration, 1);
-    var eased = 1 - Math.pow(1 - t, 3);
-    el.textContent = Math.floor(eased * target).toLocaleString() + ' Annas';
-    if (t < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
 
 var slider = document.getElementById('slider');
 var output = document.getElementById('output');
 
 function render(value) {
   output.innerHTML = states[value];
-  var counterEl = output.querySelector('#counter');
-  if (counterEl) animateCounter(counterEl);
   try { sessionStorage.setItem('sliderPos', value); } catch (err) {}
 }
 
